@@ -27,7 +27,7 @@ fps = cap.get(cv2.CAP_PROP_FPS)
 output_data = []
 current_frame = 0
 paused = False
-target_fps = 60
+target_fps = 30
 
 print("🎬 播放從 frame 0 開始，直到影片結束")
 
