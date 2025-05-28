@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>手語教學網站</title>
+    <!-- 主樣式 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+<!-- 課程學習頁面專用樣式 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/learn.css') }}">
+
+<!-- 個人檔案頁面專用樣式 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/course_progress.css') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="container">
+
+    <!-- 上半部：頁首 -->
+    <header>
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='images/手語.png') }}" alt="Logo" class="logo">
+            <h1>手語教學網站</h1>
+        </div>
+        <div class="header-right">
+            {% if session.get('user') %}
+                <span class="username">👤 {{ session['user'] }}</span>
+                <a href="{{ url_for('logout') }}" class="button">登出</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="button">登入</a>
+                <a href="{{ url_for('register') }}" class="button">註冊</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <nav class="dropdown-menu">
+        <div class="menu-title">選擇功能</div>
+        <ul class="menu-options">
+            <li><a href="{{ url_for('index') }}">首頁</a></li>
+            <li><a href="{{ url_for('about') }}">關於我們</a></li>
+    
+            <li class="has-submenu">
+                <a href="#">學習手語</a>
+                <ul class="submenu">
+                    <li><a href="{{ url_for('learn') }}">詞庫與課程</a></li>
+                    <li><a href="{{ url_for('daily_learning') }}">每日學習推薦</a></li>
+                    <li><a href="{{ url_for('course_progress') }}">學習進度</a></li>
+                </ul>
+            </li>
+    
+            <li class="has-submenu">
+                <a href="#">測驗與練習</a>
+                <ul class="submenu">
+                    <li><a href="{{ url_for('practice') }}">傳統練習</a></li>
+                    <li><a href="{{ url_for('game_mode') }}">創意小遊戲</a></li>
+                    <li><a href="{{ url_for('achievement') }}">成就牆</a></li>
+                </ul>
+            </li>
+    
+            <li class="has-submenu">
+                <a href="#">即時翻譯</a>
+                <ul class="submenu">
+                    <li><a href="{{ url_for('realtime_sign') }}">即時手語辨識</a></li>
+                    <li><a href="{{ url_for('history') }}">辨識紀錄</a></li>
+                </ul>
+            </li>
+    
+            <li class="has-submenu">
+                <a href="#">社群</a>
+                <ul class="submenu">
+                    <li><a href="{{ url_for('ranking') }}">排行榜</a></li>
+                    <li><a href="{{ url_for('community') }}">討論區</a></li>
+                    <li><a href="{{ url_for('group_tasks') }}">小組任務</a></li>
+                </ul>
+            </li>
+    
+            <li class="has-submenu">
+                <a href="#">個人資訊</a>
+                <ul class="submenu">
+                    <li><a href="{{ url_for('profile') }}">個人檔案</a></li>
+                    <li><a href="{{ url_for('settings') }}">帳號設定</a></li>
+                    <li><a href="{{ url_for('notifications') }}">提醒設定</a></li>
+                </ul>
+            </li>
+    
+            <li class="has-submenu">
+                <a href="#">後台管理</a>
+                <ul class="submenu">
+                    <li><a href="{{ url_for('admin_dashboard') }}">管理面板</a></li>
+                    <li><a href="{{ url_for('upload_video') }}">上傳教學影片</a></li>
+                    <li><a href="{{ url_for('statistics') }}">學習統計</a></li>
+                </ul>
+            </li>
+    
+        </ul>
+    </nav>
+    
+    
+
+    <!-- 主要內容：依照頁面注入內容 -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 頁尾 -->
+    <footer>
+        國立台北商業大學資管系 - 114411組 ｜ &copy;ntubimd114411
+    </footer>
+
+</div>
+</body>
+</html>

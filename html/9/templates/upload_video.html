@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>上傳影片</h1>
+
+<form method="post" enctype="multipart/form-data" class="upload-form">
+    <label for="title">影片標題：</label>
+    <input type="text" id="title" name="title" placeholder="請輸入影片標題" required>
+
+    <label for="video">選擇影片檔案：</label>
+    <input type="file" id="video" name="video" accept="video/mp4,video/mov,video/avi,video/mkv" required>
+    <div class="note">支援格式：MP4、MOV、AVI、MKV</div>
+
+    <button type="submit">上傳</button>
+</form>
+
+{% endblock %}
+

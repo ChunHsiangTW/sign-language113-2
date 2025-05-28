@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}練習手語{% endblock %}
+
+{% block content %}
+<div class="practice-container">
+    <h1 class="practice-title">🖐️ 手語練習</h1>
+
+    <div class="camera-section">
+        <!-- 左側：鏡頭畫面 -->
+        <div class="video-box" id="video-box">
+            <img src="{{ url_for('camera_bp.video_feed') }}" id="video-stream" alt="Camera Stream">
+        </div>
+
+        <!-- 右側：辨識結果 -->
+        <div class="result-box">
+            <h2>即時辨識結果</h2>
+            <p><strong>中文意思：</strong><span id="result-text">辨識中...</span></p>
+        </div>
+    </div>
+
+    <!-- 按鈕區域 -->
+    <div class="button-row">
+        <!-- 回首頁按鈕 -->
+        <a href="{{ url_for('index') }}">
+            <button type="button">回首頁</button>
+        </a>
+        <!-- 開啟 / 關閉鏡頭按鈕 -->
+        <button type="button" onclick="toggleCamera()">開啟 / 關閉鏡頭</button>
+    </div>
+</div>
+
+<script>
+    let video = document.getElementById('video-stream');
+    let videoBox = document.getElementById('video-box');
+    let autoCloseTimer = null;
+    let cameraOpened = false;
+
+    window.onload = function () {
+        let agree = confirm("是否允許開啟鏡頭進行手語練習？");
+
+        if (agree) {
+            openCamera();
+        } else {
+            videoBox.classList.add('hidden');
+        }
+    }
+
+    function openCamera() {
+        if (!cameraOpened) {
+            video.src = "{{ url_for('camera_bp.video_feed') }}";
+            videoBox.classList.remove('hidden');
+            cameraOpened = true;
+
+            // 3分鐘後自動關閉
+            autoCloseTimer = setTimeout(() => {
+                closeCamera();
+                alert("鏡頭已自動關閉，請注意裝置效能");
+            }, 3 * 60 * 1000);
+        }
+    }
+
+    function closeCamera() {
+        video.src = "";
+        videoBox.classList.add('hidden');
+        cameraOpened = false;
+        clearTimeout(autoCloseTimer);
+    }
+
+    function toggleCamera() {
+        if (cameraOpened) {
+            closeCamera();
+        } else {
+            openCamera();
+        }
+    }
+</script>
+
+{% endblock %}

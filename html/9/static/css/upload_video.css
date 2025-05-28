@@ -1,0 +1,48 @@
+body {
+    font-family: "Microsoft JhengHei", sans-serif;
+    background-color: #fff0f5;
+    padding: 20px;
+}
+h1 {
+    color: #d6336c;
+}
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(214, 51, 108, 0.2);
+    max-width: 400px;
+}
+label {
+    display: block;
+    font-size: 120px;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #c90b0b;
+}
+input[type="text"], input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+button {
+    margin-top: 20px;
+    background-color: #d6336c;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+}
+button:hover {
+    background-color: #b22b59;
+}
+.note {
+    font-size: 60px;
+    color: #888;
+    margin-top: 10px;
+}
