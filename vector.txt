@@ -1,0 +1,3 @@
+char_to_idx = {ch: i for i, ch in enumerate(chars)}
+idx_to_char = {i: ch for i, ch in enumerate(chars)}
+input_seq = torch.tensor([char_to_idx[ch] for ch in start_str], dtype=torch.long).unsqueeze(0)
