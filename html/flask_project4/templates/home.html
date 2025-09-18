@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .home-button {
+            background-color: #007bff !important;
+            color: white !important;
+            margin-right: 10px;
+        }
+        .back-button {
+            background-color: #007bff !important;
+            color: white !important;
+            margin-left: 10px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .sign-image {
+        max-width: 300px; /* 最大寬度，可依需要調整 */
+    height: auto;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+    </style>
+
+    <h2 style="text-align: center;">歡迎來到手語教學網站</h2>
+
+    <div class="d-flex justify-content-center mt-4">
+        <button class="btn btn-success btn-lg mr-4" id="practiceBtn">練習</button>
+        <button class="btn btn-success btn-lg" id="learnBtn">學習</button>
+    </div>
+
+    <!-- 鏡頭區域 -->
+    <div id="cameraContainer" style="display:none; text-align:center; margin-top: 30px;">
+        <h3>請開啟您的鏡頭</h3>
+        <video id="videoElement" width="640" height="480" autoplay></video>
+        <div class="button-container">
+            <a href="{{ url_for('home') }}" class="btn home-button mt-3">回首頁</a>
+        </div>
+    </div>
+
+    <!-- 學習手語 -->
+    <div id="learningContainer" style="display:none; text-align:center; margin-top: 30px;">
+        <h3>選擇手語圖片來學習</h3>
+        <img src="{{ url_for('static', filename='你好.png') }}" alt="手語圖片"
+     class="sign-image" onclick="showVideo()">
+
+        <p>手語意思：你好</p>
+
+        <div class="button-container">
+            <a href="{{ url_for('home') }}" class="btn home-button mt-3">回首頁</a>
+        </div>
+    </div>
+
+    <!-- 手語教學影片 -->
+    <div id="videoContainer" style="display:none; text-align:center; margin-top: 30px;">
+        <h3>手語教學影片</h3>
+        <video width="640" height="480" controls>
+            <source src="{{ url_for('static', filename='你好.mp4') }}" type="video/mp4">
+            <source src="{{ url_for('static', filename='你好.mov') }}" type="video/quicktime">
+            您的瀏覽器不支持此影片格式，請改用 Chrome 或 Edge，或下載影片觀看。
+        </video>
+
+        <div class="button-container">
+            <button class="btn back-button mt-3" id="backToImageBtn">上一頁</button>
+            <a href="{{ url_for('home') }}" class="btn home-button mt-3">回首頁</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('practiceBtn').addEventListener('click', function() {
+            document.getElementById('cameraContainer').style.display = 'block';
+            document.getElementById('learningContainer').style.display = 'none';
+            document.getElementById('videoContainer').style.display = 'none';
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        document.getElementById('videoElement').srcObject = stream;
+                    })
+                    .catch(function(error) {
+                        alert("無法開啟鏡頭: " + error);
+                    });
+            }
+        });
+
+        document.getElementById('learnBtn').addEventListener('click', function() {
+            document.getElementById('learningContainer').style.display = 'block';
+            document.getElementById('cameraContainer').style.display = 'none';
+            document.getElementById('videoContainer').style.display = 'none';
+        });
+
+        function showVideo() {
+            document.getElementById('videoContainer').style.display = 'block';
+            document.getElementById('learningContainer').style.display = 'none';
+        }
+
+        document.getElementById('backToImageBtn').addEventListener('click', function() {
+            document.getElementById('videoContainer').style.display = 'none';
+            document.getElementById('learningContainer').style.display = 'block';
+        });
+    </script>
+
+{% endblock %}

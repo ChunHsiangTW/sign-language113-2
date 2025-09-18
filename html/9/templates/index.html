@@ -1,0 +1,51 @@
+{% extends "base.html" %} 
+
+{% block title %}首頁 - 台灣手語學習平台{% endblock %}
+
+{% block content %}
+<div class="home-container">
+
+    <!-- 標題 -->
+    <h1 class="main-title">歡迎來到台灣手語學習平台</h1>
+    <p class="main-subtitle">學習手語・幫助溝通・友善社會</p>
+
+    <!-- 輪播圖片 -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="{{ url_for('static', filename='images/Hello.png') }}" alt="你好">
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ url_for('static', filename='images/thankyou.png') }}" alt="謝謝">
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ url_for('static', filename='images/help.png') }}" alt="幫助">
+            </div>
+        </div>
+
+        <!-- 左右控制箭頭 -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <!-- 功能按鈕 -->
+    <div class="home-buttons">
+        <a href="{{ url_for('learn') }}"><button>開始學習手語</button></a>
+    </div>
+</div>
+
+<!-- Swiper 的 CDN 資源 -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- 初始化 Swiper -->
+<script>
+    const swiper = new Swiper(".mySwiper", {
+        loop: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+</script>
+{% endblock %}

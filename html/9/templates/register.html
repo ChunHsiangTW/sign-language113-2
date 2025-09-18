@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="auth-container">
+        <h2>註冊</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <label>電子郵件：</label>
+            <input type="email" name="email" required>
+            <label>姓名：</label>
+            <input type="text" name="name" required>
+            <label>性別：</label>
+            <select name="gender" required>
+                <option value="男">男</option>
+                <option value="女">女</option>
+                <option value="其他">其他</option>
+            </select>
+            <label>年齡：</label>
+            <input type="number" name="age" min="0" required>
+            <label>密碼：</label>
+            <input type="password" name="password" required>
+            <label>確認密碼：</label>
+            <input type="password" name="confirm" required>
+            <input type="submit" value="註冊">
+        </form>
+        <p>已經有帳號了？<a href="{{ url_for('login') }}">請登入</a></p>
+    </div>
+{% endblock %}

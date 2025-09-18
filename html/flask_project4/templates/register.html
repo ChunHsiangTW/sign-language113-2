@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFA500; /* 黃色背景 */
+            color: #333;
+        }
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4CAF50; /* 設定標題顏色為綠色 */
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-custom {
+            width: 100%;
+            background-color: #4CAF50; /* 按鈕背景色為綠色 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .btn-custom:hover {
+            background-color: #45a049; /* 按鈕懸停時變深綠色 */
+        }
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .auth-link a {
+            text-decoration: none;
+            color: #007bff; /* 註冊頁面鏈接的顏色 */
+        }
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+        .btn-home {
+            width: 100%;
+            background-color: #007bff; /* 回首頁按鈕的顏色 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .btn-home:hover {
+            background-color: #0056b3; /* 按鈕懸停時變深藍色 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>註冊</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">帳號（姓名）：</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">性別：</label>
+                <select id="gender" name="gender" class="form-control" required>
+                    <option value="male">男</option>
+                    <option value="female">女</option>
+                    <option value="other">其他</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="age">年齡：</label>
+                <input type="number" id="age" name="age" class="form-control" required min="1" max="100">
+            </div>
+            <div class="form-group">
+                <label for="password">密碼：</label>
+                <input type="password" id="password" name="password" class="form-control" required 
+                       pattern="^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}$" 
+                       title="密碼必須包含至少一個字母和一個數字，並且至少6個字元長" 
+                       minlength="6">
+            </div>
+            <button type="submit" class="btn-custom">註冊</button>
+        </form>
+        <div class="auth-link">
+            <p>已經有帳號了？<a href="{{ url_for('login') }}">請登入</a></p>
+        </div>
+
+        <!-- 回首頁按鈕 -->
+        <a href="{{ url_for('home') }}" class="btn-home">回首頁</a>
+    </div>
+
+</body>
+</html>
