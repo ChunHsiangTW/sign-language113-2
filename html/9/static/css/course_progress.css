@@ -1,0 +1,88 @@
+/* 整體區塊標題 */
+h2 {
+  font-family: 'Microsoft JhengHei', sans-serif;
+  color: #c71585; /* 深粉色 */
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* 表格樣式 */
+table {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* 表格列之間的間距 */
+  font-family: 'Microsoft JhengHei', sans-serif;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff0f6; /* 淡粉色背景 */
+}
+
+/* 表頭 */
+thead tr {
+  background-color: #ffb6c1; /* 淡粉紅 */
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* 表頭欄位圓角 */
+thead tr th:first-child {
+  border-top-left-radius: 12px;
+}
+thead tr th:last-child {
+  border-top-right-radius: 12px;
+}
+
+/* 表身每一列 */
+tbody tr {
+  background-color: white;
+  transition: background-color 0.3s ease;
+}
+
+/* 滑鼠移入列背景變色 */
+tbody tr:hover {
+  background-color: #ffe6f0;
+}
+
+/* 表格資料欄位 */
+tbody td {
+  padding: 12px 15px;
+  color: #555;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* 連結樣式 */
+tbody td a {
+  color: #c71585;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+tbody td a:hover {
+  text-decoration: underline;
+  color: #ff1493; /* 更深的粉色 */
+}
+
+/* 完成狀態字色 */
+tbody td:nth-child(5) {
+  font-weight: 700;
+  color: #008000; /* 預設完成是綠色 */
+}
+
+tbody td:nth-child(5):contains("未完成") {
+  color: #d9534f; /* 未完成是紅色 */
+}
+
+/* 如果無資料列，跨欄置中 */
+tbody tr td[colspan="5"] {
+  font-style: italic;
+  color: #999;
+  padding: 30px;
+  font-size: 1.1rem;
+}

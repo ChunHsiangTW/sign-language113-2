@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}關於我們{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <h1 class="about-title">關於我們</h1>
+
+    <section class="about-section">
+        <h2>🌟 網站宗旨</h2>
+        <p>我們致力於推廣 <strong>台灣手語</strong>，希望能夠協助聽障朋友更方便地與他人溝通。</p>
+        <p>本網站也提供多樣的學習資源，幫助使用者從基礎開始學習手語，並在日常生活中應用。</p>
+        <p>我們相信，語言是連接彼此的橋樑，而手語也能成為一種美麗的表達方式。</p>
+    </section>
+
+    <section class="about-section">
+        <h2>👩‍💻 開發團隊簡介</h2>
+        <p>我們是來自 <strong>台北商業大學 資訊管理系</strong> 的學生。</p>
+        <p>希望透過網站設計與開發，幫助更多聽障朋友學習與表達自我。</p>
+        <p>同時也期望這個平台能成為 <em>手語學習者</em> 的溫馨空間。</p>
+    </section>
+
+    <section class="about-section">
+        <h2>📘 使用說明</h2>
+        <ul>
+            <li>🔑 點擊首頁右上角的「註冊」按鈕，填寫基本資料後即可註冊成功。</li>
+            <li>🔐 註冊完成後，請至「登入」頁面輸入帳號密碼登入。</li>
+            <li>🎓 在「學習手語」頁面中，點擊圖片可觀看該手語的教學影片。</li>
+            <li>🧠 可使用「手語翻譯」功能，將鏡頭前的手語動作轉換為文字。</li>
+        </ul>
+        <p>我們希望學習手語變得 <strong>簡單、有趣、實用</strong>！</p>
+    </section>
+</div>
+<a href="{{ url_for('index') }}" class="button">回首頁</a>
+
+{% endblock %}

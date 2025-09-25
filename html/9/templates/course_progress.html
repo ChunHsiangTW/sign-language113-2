@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>學習進度</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+        <tr>
+            <th>影片標題</th>
+            <th>分類</th>
+            <th>描述</th>
+            <th>進度</th>
+            <th>完成狀態</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for course in courses %}
+        <tr>
+            <td><a href="{{ url_for('video', title_en=course.title_en) }}">{{ course.title_cn }}</a></td>
+            <td>{{ course.category }}</td>
+            <td>{{ course.description }}</td>
+            <td>{{ (course.progress or 0) | round(2) }}%</td>
+            <td>
+                {% if course.completed %}
+                    已完成
+                {% else %}
+                    未完成
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="5">目前沒有學習紀錄</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
