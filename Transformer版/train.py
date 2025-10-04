@@ -1,5 +1,4 @@
-# train.py
-import os, json, random
+import os, json, random, shutil   # ← 加入 shutil 以便複製 latest
 import numpy as np
 import torch
 import torch.nn as nn
@@ -11,7 +10,8 @@ from Sign_Transformer_Encoder import SignTransformerEncoder  # ← 新類別名
 # ===== 超參數 =====
 DATA_FOLDER = "./json_data"
 LABEL_MAP_PATH = "./label_map.json"
-CHECKPOINT_PATH = "./checkpoints/sign_model.pt"
+CHECKPOINT_DIR = "./checkpoints"              # ← 改成資料夾
+LATEST_PATH   = os.path.join(CHECKPOINT_DIR, "sign_model.pt")  # latest 檔名
 
 BATCH_SIZE = 8
 EPOCHS = 50
@@ -71,8 +71,21 @@ criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
 optimizer = optim.AdamW(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS)
 
-os.makedirs(os.path.dirname(CHECKPOINT_PATH), exist_ok=True)
+os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 best_acc = -1.0
+
+# === [B] 評估函式：用與訓練相同的 DataLoader 在 eval() 下重跑 ===
+@torch.no_grad()
+def evaluate_on_loader(model, loader, device):
+    model.eval()
+    correct, total = 0, 0
+    for X, y, L in loader:
+        X, y, L = X.to(device), y.to(device), L.to(device)
+        logits, _ = model(X, lengths=L)
+        pred = logits.argmax(1)
+        correct += (pred == y).sum().item()
+        total += y.size(0)
+    return (correct / total) if total else 0.0
 
 for epoch in range(1, EPOCHS + 1):
     model.train()
@@ -98,16 +111,24 @@ for epoch in range(1, EPOCHS + 1):
         total_samples += batch_y.size(0)
 
     train_loss = total_loss / total_samples
-    train_acc = total_correct / total_samples
+    train_acc  = total_correct / total_samples
     scheduler.step()
 
-    # 先用訓練集挑 best；若你有驗證集，請改用驗證指標挑存檔
-    if train_acc > best_acc:
-        best_acc = train_acc
-        torch.save(model.state_dict(), CHECKPOINT_PATH)
+    # === [B] 在每個 epoch 結束後，以 eval() 模式用同一個 DataLoader 重算一次 ===
+    eval_acc = evaluate_on_loader(model, train_loader, device)
 
-    print(f"Epoch [{epoch}/{EPOCHS}]  loss={train_loss:.4f}  acc={train_acc:.4f}  best_acc={best_acc:.4f}")
+    # === [C] 用 eval_acc 挑存檔，檔名加上 epoch 與分數；並複製一份為最新檔 ===
+    if eval_acc > best_acc:
+        best_acc = eval_acc
+        save_path = os.path.join(CHECKPOINT_DIR, f"sign_model_e{epoch:02d}_acc{eval_acc:.4f}.pt")
+        torch.save(model.state_dict(), save_path)
+        # 同步覆蓋 latest（給 inference2.py 用固定路徑）
+        shutil.copyfile(save_path, LATEST_PATH)
 
-print(f"最佳模型已儲存至：{CHECKPOINT_PATH}")
+    print(
+        f"Epoch [{epoch}/{EPOCHS}]  "
+        f"loss={train_loss:.4f}  train_acc={train_acc:.4f}  "
+        f"eval_acc={eval_acc:.4f}  best_acc={best_acc:.4f}"
+    )
 
-
+print(f"最佳模型（latest）已儲存至：{LATEST_PATH}")
