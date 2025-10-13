@@ -1,0 +1,621 @@
+/* 基本頁面設置 */
+body {
+    font-family: 'Microsoft JhengHei', sans-serif; /* 設定字體 */
+    background-color: #fdf6f0; /* 背景顏色 */
+    margin: 0; /* 去除頁面邊距 */
+    padding: 0; /* 去除頁面內邊距 */
+    display: flex; /* 使用 Flexbox 來排版 */
+    justify-content: center; /* 使內容水平居中 */
+}
+
+/* 主容器設定 */
+.container {
+    width: 100%; /* 容器寬度為 100% */
+    max-width: 1200px; /* 最大寬度為 600px */
+    min-height: 100vh; /* 最小高度為視窗高度 */
+    display: flex; /* 使用 Flexbox 排版 */
+    flex-direction: column; /* 使內部元素縱向排列 */
+    box-sizing: border-box; /* 包含 padding 和 border 進容器的大小計算 */
+    background-color: #ffffff; /* 背景顏色 */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* 添加陰影效果 */
+}
+
+.container h1 {
+    text-align: center; /* 文字置中 */
+    margin: 0; /* 去除外邊距 */
+    padding-top: 5px; /* 上邊距 */
+    font-size: 2rem; /* 字型大小 */
+    color: #4DBBC1; /* 顏色 */
+}
+
+/* 頁面頭部設置 */
+header {
+    display: flex; /* 使用 Flexbox 排版 */
+    justify-content: space-between; /* 頭部兩端排列 */
+    align-items: center; /* 垂直置中 */
+    padding: 10px; /* 內邊距 */
+    background-color: #ffe4ec; /* 背景顏色 */
+}
+
+/* 左側頭部區塊 */
+.header-left {
+    display: flex; /* 使用 Flexbox 排版 */
+    align-items: center; /* 垂直置中 */
+}
+
+/* 標誌樣式 */
+.logo {
+    height: 100px; /* 標誌高度 */
+    margin-right: 10px; /* 右邊距 */
+}
+
+/* 右側頭部區塊按鈕 */
+.header-right .button {
+    background-color: #ff90b3; /* 背景顏色 */
+    color: white; /* 字體顏色 */
+    border: none; /* 去除邊框 */
+    padding: 8px 12px; /* 內邊距 */
+    margin-left: 5px; /* 左邊距 */
+    text-decoration: none; /* 去除文字裝飾 */
+    border-radius: 0px; /* 邊角圓角 */
+}
+
+/* 使用者名稱區塊 */
+.username {
+    margin-right: 10px; /* 右邊距 */
+    font-weight: bold; /* 文字加粗 */
+    font-size: 20px;
+}
+
+/* 頁面導覽區塊 */
+nav {
+    padding: 10px; /* 內邊距 */
+    background-color: #fff0f5; /* 背景顏色 */
+}
+
+
+
+/* 導覽列整體樣式 */
+.dropdown-menu {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;  /* 水平排列 */
+    justify-content: center;
+    padding: 10px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    margin: 0;
+}
+
+/* 主選單標題（可省略或調整） */
+.menu-title {
+    display: none;
+}
+
+/* 主選單列 */
+.menu-options {
+    display: flex;
+    flex-direction: row;  /* 水平排列 */
+    gap: 15px;  /* 主選單間距 */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 每個主選單項目 */
+.menu-options > li {
+    position: relative;
+}
+
+/* 主選單連結樣式 */
+.menu-options > li > a {
+    font-size: 20px;  
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    padding: 10px 16px;
+    display: block;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.menu-options > li > a:hover {
+    background-color: #e6f2ff;
+}
+
+/* 子選單（下拉選單）預設隱藏 */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;  /* 子選單出現在主選單下方 */
+    left: 0;
+    background-color: #ff90b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 5px 0;
+    min-width: 160px;
+    z-index: 1000;
+}
+
+/* 子選單項目 */
+.submenu li {
+    padding: 0;
+}
+
+.submenu li a {
+    font-size: 20px;  
+    display: block;
+    padding: 10px 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.submenu li a:hover {
+    background-color: #dcefff;
+}
+
+/* 滑鼠移上去時顯示子選單 */
+.has-submenu:hover > .submenu {
+    display: block;
+}
+
+
+/* 主要內容區域 */
+main {
+    padding: 10px; /* 內邊距 */
+    flex: 1; /* 使內容區域彈性填滿剩餘空間 */
+    display: flex; /* 使用 Flexbox 排版 */
+    flex-direction: column; /* 元素垂直排列 */
+    justify-content: flex-start; /* 預設從上方開始排列 */
+    align-items: center; /* 置中對齊 */
+}
+
+/* 圖片輪播容器 */
+.slider {
+    display: flex; /* 使用 Flexbox 排版 */
+    gap: 10px; /* 內容間距 */
+    overflow-x: auto; /* 水平滾動 */
+}
+
+/* 輪播圖片樣式 */
+.slider img {
+    width: 300px; /* 圖片寬度 */
+    height: 300px; /* 圖片高度 */
+    object-fit: cover; /* 讓圖片按比例填充 */
+    border: 2px solid #ffcde3; /* 邊框樣式 */
+}
+
+/* 頁腳設置 */
+footer {
+    text-align: center; /* 文字置中 */
+    padding: 10px; /* 內邊距 */
+    background-color: #ffe4ec; /* 背景顏色 */
+    font-size: 14px; /* 字型大小 */
+    color: #777; /* 字體顏色 */
+}
+
+/* 認證區塊容器 */
+.auth-container {
+    width: 100%; /* 寬度 100% */
+    max-width: 400px; /* 最大寬度 400px */
+    margin: auto; /* 置中 */
+    background-color: #ffffff; /* 背景顏色 */
+    padding: 30px; /* 內邊距 */
+    border-radius: 8px; /* 圓角 */
+    box-shadow: 0 0 12px rgba(0,0,0,0.1); /* 陰影效果 */
+    margin-top: 50px; /* 上邊距 */
+}
+
+/* 認證區塊標題 */
+.auth-container h2 {
+    text-align: center; /* 文字置中 */
+    color: #ff90b3; /* 顏色 */
+    margin-bottom: 20px; /* 底部邊距 */
+}
+
+/* 認證表單樣式 */
+.auth-container form {
+    display: flex; /* 使用 Flexbox 排版 */
+    flex-direction: column; /* 元素垂直排列 */
+    gap: 12px; /* 元素間距 */
+}
+
+/* 認證表單輸入欄位樣式 */
+.auth-container input[type="text"],
+.auth-container input[type="email"],
+.auth-container input[type="password"],
+.auth-container input[type="number"],
+.auth-container select {
+    padding: 10px; /* 內邊距 */
+    border: 1px solid #ffa9d2; /* 邊框顏色 */
+    border-radius: 4px; /* 邊角圓角 */
+    font-size: 16px; /* 字型大小 */
+    background-color: #fffafc; /* 背景顏色 */
+    transition: border-color 0.3s; /* 邊框顏色變化過渡效果 */
+}
+
+/* 當輸入框聚焦時改變邊框顏色 */
+.auth-container input[type="text"]:focus,
+.auth-container input[type="email"]:focus,
+.auth-container input[type="password"]:focus,
+.auth-container input[type="number"]:focus,
+.auth-container select:focus {
+    border-color: #ff90b3; /* 聚焦邊框顏色 */
+    outline: none; /* 去除藍色輪廓 */
+}
+
+/* 提交按鈕樣式 */
+.auth-container input[type="submit"] {
+    background-color: #ff90b3; /* 背景顏色 */
+    color: white; /* 文字顏色 */
+    padding: 10px; /* 內邊距 */
+    border: none; /* 去除邊框 */
+    border-radius: 4px; /* 圓角邊框 */
+    font-size: 16px; /* 字型大小 */
+    cursor: pointer; /* 滑鼠變成點擊手型 */
+    transition: background-color 0.3s; /* 背景顏色變化過渡效果 */
+}
+
+/* 當按鈕被懸停時改變背景顏色 */
+.auth-container input[type="submit"]:hover {
+    background-color: #ff6d9d; /* 懸停時背景顏色 */
+}
+
+/* 認證區塊中的連結樣式 */
+.auth-container a {
+    color: #ff90b3; /* 文字顏色 */
+    text-decoration: none; /* 去除文字裝飾 */
+}
+
+/* 當連結被懸停時加上下劃線 */
+.auth-container a:hover {
+    text-decoration: underline; /* 加上下劃線 */
+}
+
+/* 錯誤訊息樣式 */
+.flashes {
+    color: red; /* 文字顏色 */
+    list-style: none; /* 去除清單標記 */
+    padding: 0; /* 去除內邊距 */
+    margin-bottom: 10px; /* 底部邊距 */
+    text-align: center; /* 文字置中 */
+}
+
+
+/* 按鈕樣式 */
+button, .button {
+    background-color: #ff90b3; /* 背景顏色 */
+    color: white; /* 文字顏色 */
+    padding: 12px 20px; /* 內邊距 */
+    border: none; /* 去除邊框 */
+    border-radius: 4px; /* 圓角 */
+    font-size: 16px; /* 字型大小 */
+    cursor: pointer; /* 滑鼠變為可點擊手型 */
+    transition: background-color 0.3s; /* 背景顏色變化過渡效果 */
+    text-align: center; /* 文字置中 */
+    display: inline-block; /* 行內區塊 */
+    margin-top: 20px; /* 上邊距 */
+}
+
+/* 按鈕懸停效果 */
+button:hover, .button:hover {
+    background-color: #ff6d9d; /* 背景顏色 */
+}
+
+/* 頁面標題樣式 */
+h2 {
+    text-align: center; /* 文字置中 */
+    margin: 0; /* 去除外邊距 */
+    padding-top: 5px; /* 上邊距 */
+    font-size: 2rem; /* 字型大小 */
+    color: #ff6d9d; /* 顏色 */
+}
+
+
+
+/* 關於頁面容器 */
+.about-container {
+    max-width: 700px; /* 最大寬度 700px */
+    margin: 0 auto; /* 置中 */
+    padding: 10px; /* 內邊距 */
+    background-color: #fff8f0; /* 背景顏色 */
+    border-radius: 15px; /* 圓角邊框 */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+    line-height: 1.8; /* 行高 */
+}
+
+/* 關於頁面標題 */
+.about-title {
+    font-size: 4rem; /* 字型大小 */
+    text-align: center; /* 文字置中 */
+    margin-bottom: 10px; /* 底部邊距 */
+    color: #ff6d9d; /* 顏色 */
+}
+
+/* 關於頁面各區段設置 */
+.about-section {
+    margin-bottom: 30px; /* 底部邊距 */
+}
+
+
+.about-container h1 {
+    text-align: center; /* 文字置中 */
+    margin: 0; /* 去除外邊距 */
+    padding-top: 5px; /* 上邊距 */
+    font-size: 3rem; /* 字型大小 */
+    color: #4DBBC1; /* 顏色 */
+}
+
+/* 關於頁面區段標題 */
+.about-section h2 {
+    font-size: 2rem; /* 字型大小 */
+    color: #444; /* 顏色 */
+    margin-bottom: 10px; /* 底部邊距 */
+}
+
+/* 關於頁面段落與清單樣式 */
+.about-section p, .about-section li {
+    font-size: 1.3rem; /* 字型大小 */
+    color: #333; /* 顏色 */
+}
+
+/* 關於頁面清單樣式 */
+.about-section ul {
+    padding-left: 20px; /* 左邊距 */
+}
+
+/* 練習頁面容器 */
+.practice-container {
+    max-width: 1100px; /* 最大寬度 900px */
+    margin: 0 auto; /* 置中 */
+    padding: 50px; /* 內邊距 */
+    background-color: #f0f9ff; /* 背景顏色 */
+    border-radius: 20px; /* 圓角邊框 */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+}
+
+/* 練習頁面標題 */
+.practice-title {
+    text-align: center; /* 文字置中 */
+    font-size: 3rem; /* 字型大小 */
+    color: #4a90e2; /* 顏色 */
+    margin-bottom: 20px; /* 底部邊距 */
+}
+
+/* 相機和結果區域 */
+.camera-section {
+    display: flex; /* 使用 Flexbox 排版 */
+    flex-wrap: wrap; /* 允許換行 */
+    justify-content: space-between; /* 內容分開 */
+    gap: 20px; /* 內容間距 */
+}
+
+/* 鏡頭區塊 */
+.video-box {
+    flex: 1; /* 使該區域彈性擴展 */
+    min-width: 280px; /* 設定最小寬度 */
+    justify-content: center;   /* 水平置中 */
+}
+
+/* 鏡頭區域圖片 */
+.video-box img {
+    width: 100%; /* 圖片寬度 100% */
+    max-width: 100%; /* 最大寬度為父容器寬度 */
+    border-radius: 15px; /* 圓角邊框 */
+    border: 2px solid #ccc; /* 邊框顏色 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+}
+
+/* 翻譯結果區域 */
+.result-box {
+    flex: 1; /* 使該區域彈性擴展 */
+    min-width: 280px; /* 設定最小寬度 */
+    background-color: #fff; /* 背景顏色 */
+    border-radius: 15px; /* 圓角邊框 */
+    padding: 20px; /* 內邊距 */
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05); /* 內陰影效果 */
+}
+
+/* 結果區塊標題 */
+.result-box h2 {
+    font-size: 1.3rem; /* 字型大小 */
+    margin-bottom: 10px; /* 底部邊距 */
+}
+
+/* 結果區塊段落文字 */
+.result-box p {
+    font-size: 1.1rem; /* 字型大小 */
+}
+
+/* 按鈕容器 */
+.button-row {
+    margin-top: 20px; /* 上邊距 */
+    display: flex; /* 使用 Flexbox 排版 */
+    justify-content: space-between; /* 按鈕兩側對齊 */
+    gap: 15px; /* 內容間距 */
+}
+/* 按鈕樣式設定 */
+button {
+    padding: 10px 20px; /* 按鈕內部邊距，水平（左右）10px，垂直（上下）20px */
+    border: none; /* 移除按鈕邊框 */
+    background-color: #ff6d9d; /* 設定按鈕背景顏色為淺橙色 (#ffa07a) */
+    color: white; /* 設定按鈕文字顏色為白色 */
+    font-weight: bold; /* 設定按鈕文字為粗體 */
+    border-radius: 8px; /* 設定按鈕圓角半徑為 8px，讓按鈕有圓角效果 */
+    cursor: pointer; /* 當滑鼠懸停在按鈕上時顯示為可點擊的手指圖示 */
+    transition: background-color 0.3s ease; /* 當背景顏色變化時，過渡時間為0.3秒，使用平滑過渡效果 */
+}
+
+/* 按鈕懸停效果 */
+button:hover {
+    background-color: #f75188; /* 當滑鼠懸停在按鈕上時，背景顏色變為較深的橙色 (#ff7f50) */
+}
+
+/* 隱藏影片時整體重新排版 */
+.video-box.hidden {
+    display: none; /* 當元素包含 'hidden' 類別時，將其隱藏，這樣元素不會顯示在頁面上 */
+}
+
+@media screen and (max-width: 768px) {
+    /* 當螢幕寬度小於或等於768px時（通常是手機或平板） */
+    
+    .camera-section {
+        flex-direction: column; /* 將 .camera-section 元素的排版從水平方向改為垂直方向 */
+        align-items: center; /* 將 .camera-section 的內容居中對齊 */
+    }
+
+    .video-box,
+    .result-box {
+        width: 100%; /* 設定 .video-box 和 .result-box 在螢幕寬度小於或等於768px時寬度為100%，使其填滿整個區塊 */
+    }
+}
+
+.home-container {
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.main-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #444;
+}
+
+.main-subtitle {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+}
+/* 整個畫面容器 */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 水平居中 */
+    align-items: center;       /* 垂直居中 */
+    height: 100vh;             /* 使容器的高度佔滿整個視窗 */
+    text-align: center;        /* 文字居中對齊 */
+}
+.home-container h3 {
+    text-align: center; /* 文字置中 */
+    margin: 0; /* 去除外邊距 */
+    padding-top: 1px; /* 上邊距 */
+    font-size: 3rem; /* 字型大小 */
+    color: #42a3a8; /* 顏色 */
+}
+.home-container p {
+    text-align: center; /* 文字置中 */
+    margin: 0; /* 去除外邊距 */
+    padding-top: 5px; /* 上邊距 */
+    font-size: 1.7rem; /* 字型大小 */
+    color: #30a4aa; /* 顏色 */
+}
+
+/* Swiper 輪播區 */
+.swiper {
+    width: 80%;                /* 設定輪播容器寬度為 100%（填滿父容器寬度） */
+    height: 300px;             /* 設定輪播容器高度為 300 像素 */
+    margin-bottom: 20px;       /* 下方留 20px 的間距，用於與其他區塊間隔 */
+    border-radius: 16px;       /* 邊角圓弧，讓整個輪播容器有圓角效果（16px） */
+    overflow: hidden;          /* 超出邊框的內容（例如圖片）會被隱藏，不會溢出圓角區域 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);  /* 加上淡淡的陰影，讓容器有立體感 */
+}
+
+/* 圖片樣式 */
+.swiper-slide img {
+    height: 250px;             /* 固定高度 */
+    width: auto;               /* 寬度依比例自動調整 */
+    display: block;
+    object-fit: contain;      /* 確保圖片內容完整顯示、不裁切 */
+    margin: 0 auto;            /* 圖片置中 */
+}
+
+/* 功能按鈕 */
+.home-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* 按鈕樣式 */
+.home-buttons button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    background-color:  #ff6d9d;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.home-buttons button:hover {
+    background-color: #f75188;
+}
+
+.progress-layout {
+  background-color: #fff0f5;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 800px;
+  margin: auto;
+}
+
+.progress-bar-total {
+  background-color: #ffe4ec;
+  border-radius: 10px;
+  height: 20px;
+  margin: 12px 0;
+}
+
+.progress-bar-fill {
+  background-color: #f397af;
+  height: 100%;
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.5s;
+}
+
+.lesson-progress-list {
+  list-style: none;
+  padding: 0;
+}
+
+.lesson-progress-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.lesson-name {
+  flex: 1;
+  font-weight: bold;
+  color: #d33669;
+}
+
+.progress-bar {
+  width: 50%;
+  background-color: #ffe4ec;
+  height: 16px;
+  border-radius: 8px;
+  margin: 0 10px;
+  position: relative;
+}
+
+.progress-fill {
+  background-color: #f397af;
+  height: 100%;
+  border-radius: 8px;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.status {
+  color: #888;
+}
+

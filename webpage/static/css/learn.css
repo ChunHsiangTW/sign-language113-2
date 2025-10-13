@@ -1,0 +1,210 @@
+/* 主版面：左側選單 + 右側課程內容 */
+.lesson-layout { 
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+/* 側邊欄樣式 */
+.lesson-sidebar {
+    width: 220px;
+    padding: 20px;
+    background-color: #ffe4ec;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 側邊欄標題 */
+.lesson-sidebar h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d33669;
+    margin-bottom: 12px;
+}
+
+/* 側邊欄列表 */
+.lesson-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lesson-sidebar li {
+    margin: 10px 0;
+}
+
+/* 側邊欄連結 */
+.lesson-sidebar a {
+    text-decoration: none;
+    color: #d33669;
+    font-weight: 600;
+    padding: 8px 12px;
+    display: block;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.lesson-sidebar a:hover {
+    background-color: #ffcde3;
+    color: #fff;
+}
+
+/* 右側課程內容 */
+.lesson-content {
+    flex-grow: 1;
+}
+
+/* 課程卡片容器：使用 Grid 兩欄式排列 */
+.lesson-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* 單一課程卡片 */
+.lesson-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fef4f8;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.lesson-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* 課程標題樣式 */
+.lesson-container h1 {
+    text-align: center; /* 文字置中 */
+    margin: 0; /* 去除外邊距 */
+    padding-top: 5px; /* 上邊距 */
+    font-size: 4rem; /* 字型大小 */
+    color: #4DBBC1; /* 顏色 */
+    font-weight: bold;
+}
+
+/* 圖片容器 */
+.lesson-image-container {
+    width: 100%;        /* 讓容器寬度可以自適應 */
+    max-width: 300px;   /* 最大寬度350px */
+    margin-top: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #fff0f5;
+    border: 2px solid #f8c1d6;
+    padding: 12px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+
+.lesson-image-container img {
+    width: 100%;
+    max-width: 300px;  /* 最大寬度300 */
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;  /* 水平置中 */
+}
+
+
+.lesson-image-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 課程影片容器 */
+.lesson-video-container {
+    width: 80%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+/* 影片元素樣式 */
+video {
+    width: 80%;
+    height: auto;
+    max-height: 80vh;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* 搜尋表單樣式 */
+.search-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 搜尋輸入框 */
+.search-form input[type="text"] {
+    width: 100%;
+    height: 42px;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: #f397af;
+    box-shadow: 0 0 5px rgba(243, 151, 175, 0.5);
+}
+
+/* 搜尋按鈕 */
+.search-form button {
+    width: 100%;
+    height: 42px;
+    background-color: #d33669;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.search-form button:hover {
+    background-color: #b92c58;
+    transform: scale(1.02);
+}
+
+/* 圖片容器 */
+.lesson-image-container {
+    width: 100%;           /* 寬度自適應卡片 */
+    max-width: 300px;      /* 卡片最大寬度 */
+    margin-top: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #fff0f5;
+    border: 2px solid #f8c1d6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* 圖片樣式 */
+.lesson-image-container img {
+    width: 100%;           /* 寬度填滿容器 */
+    height: auto;          /* 高度自動，保持比例 */
+    display: block;
+}

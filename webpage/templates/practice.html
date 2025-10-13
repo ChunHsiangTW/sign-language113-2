@@ -1,0 +1,204 @@
+{% extends "base.html" %}  
+{% block title %}手語練習{% endblock %}
+
+{% block content %}
+<div class="practice-container">
+  <h1 class="practice-title">🖐️ 手語練習（即時辨識版｜修正版）</h1>
+
+  <div class="camera-section">
+    <div class="video-box" style="position:relative;max-width:900px;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;border:1px solid #203079">
+      <!-- 原始鏡頭（不顯示），使用 Canvas 畫疊圖 -->
+      <video id="video" autoplay playsinline muted style="position:absolute;inset:0;width:100%;height:100%;opacity:0"></video>
+      <canvas id="canvas" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+      <div id="pill" style="position:absolute;left:12px;top:12px;background:rgba(16,24,64,.6);color:#cfe0ff;border:1px solid #2a3a7a;padding:6px 10px;border-radius:999px;font-size:12px">環境檢查中…</div>
+    </div>
+
+    <div class="result-box" style="margin-top:12px">
+      <h2>即時辨識結果</h2>
+      <p><strong>中文意思：</strong><span id="result-text">尚未啟動</span></p>
+      <p><strong>FPS：</strong><span id="fps">0</span></p>
+      <p id="hint" style="color:#9fb0ff"></p>
+    </div>
+  </div>
+
+  <div class="button-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+    <button onclick="location.href='{{ url_for('index') }}'">回首頁</button>
+    <button id="btnStart">開始辨識</button>
+    <button id="btnStop" disabled>停止</button>
+  </div>
+</div>
+
+<!-- ======== MediaPipe Hands ======== -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+<script>
+// ===== DOM =====
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const startBtn = document.getElementById('btnStart');
+const stopBtn = document.getElementById('btnStop');
+const resultText = document.getElementById('result-text');
+const fpsEl = document.getElementById('fps');
+const hintEl = document.getElementById('hint');
+const pill = document.getElementById('pill');
+
+// ===== State =====
+let stream = null;
+let running = false;
+let rafId = null;
+let lastTime = performance.now();
+const voteBuf = [];
+const VOTE_K = 7;
+
+// ===== Hands =====
+const hands = new Hands({
+  locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+});
+hands.setOptions({
+  maxNumHands: 1,
+  modelComplexity: 1,
+  minDetectionConfidence: 0.6,
+  minTrackingConfidence: 0.5
+});
+hands.onResults(onResults);
+
+// ===== Env pill =====
+const isLocalhost = ['localhost','127.0.0.1','[::1]'].includes(location.hostname);
+const isSecure = window.isSecureContext || location.protocol === 'https:';
+function updateEnvPill(){
+  if (isSecure){ pill.textContent = 'HTTPS：可使用相機'; }
+  else if (isLocalhost){ pill.textContent = 'localhost：可使用相機'; }
+  else { pill.textContent = '非安全來源：可能無法使用相機'; }
+}
+updateEnvPill();
+
+// ===== Camera opening with lower resolution =====
+async function pickPreferredConstraint(){
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const cameras = devices.filter(d => d.kind === 'videoinput');
+  const external = cameras.find(c => /usb|external|pro|logi|hd|webcam/i.test(c.label));
+  const first = cameras[0];
+
+  // 降低解析度
+  const wh = { width: { ideal: 640 }, height: { ideal: 480 } };
+
+  if (external) return { video: { ...wh, deviceId: { exact: external.deviceId } }, audio: false };
+  if (first) return { video: { ...wh, deviceId: { exact: first.deviceId } }, audio: false };
+  return { video: { ...wh, facingMode: { ideal: 'user' } }, audio: false };
+}
+
+async function openCamera(){
+  const constraint = await pickPreferredConstraint();
+  return await navigator.mediaDevices.getUserMedia(constraint);
+}
+
+// ===== Friendly error messages =====
+function mapGumError(e){
+  switch(e?.name){
+    case 'NotAllowedError':
+    case 'SecurityError': return '權限被拒：請允許相機使用或改用 HTTPS / localhost。';
+    case 'NotReadableError':
+    case 'TrackStartError': return '相機被占用：請關閉其他使用相機的程式。';
+    case 'NotFoundError':
+    case 'DevicesNotFoundError': return '找不到相機，請確認裝置存在。';
+    case 'OverconstrainedError': return '相機限制無法滿足，請降解析度或換鏡頭。';
+    default: return '開啟相機失敗：' + (e?.message || e?.name || '未知錯誤');
+  }
+}
+
+// ===== Start / Stop =====
+startBtn.onclick = async () => {
+  if (running) return;
+  try {
+    stream = await openCamera();
+    video.srcObject = stream;
+    await video.play();
+    running = true;
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    resultText.textContent = '偵測中…';
+    hintEl.textContent = '';
+    lastTime = performance.now();
+    loop();
+  } catch (err) {
+    const msg = mapGumError(err);
+    resultText.textContent = msg;
+    hintEl.textContent = '若頁面嵌在 iFrame，需允許 camera；或點右上角在新分頁開啟。';
+    alert(msg);
+  }
+};
+
+stopBtn.onclick = () => {
+  running = false;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  if (rafId) cancelAnimationFrame(rafId);
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  stream = null;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  resultText.textContent = '已停止';
+};
+
+// ===== Main loop =====
+async function loop(){
+  if (!running) return;
+  if (video.readyState < 2){ rafId = requestAnimationFrame(loop); return; }
+  try { await hands.send({ image: video }); } catch(e){ console.warn(e); }
+  const now = performance.now();
+  fpsEl.textContent = Math.max(1, Math.round(1000 / Math.max(1, (now - lastTime))));
+  lastTime = now;
+  rafId = requestAnimationFrame(loop);
+}
+
+// ===== onResults =====
+function onResults(results){
+  const w = video.videoWidth || canvas.clientWidth;
+  const h = video.videoHeight || canvas.clientHeight;
+  if (w && h){ canvas.width = w; canvas.height = h; }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+
+  if (results.multiHandLandmarks && results.multiHandLandmarks.length) {
+    for (const landmarks of results.multiHandLandmarks) {
+      drawConnectors(ctx, landmarks, HAND_CONNECTIONS, { lineWidth: 3 });
+      drawLandmarks(ctx, landmarks, { lineWidth: 2 });
+    }
+    const word = classifyGesture(results.multiHandLandmarks[0]);
+    pushVote(word);
+    resultText.textContent = majorityVote(voteBuf);
+  } else {
+    resultText.textContent = '未偵測到手部';
+  }
+}
+
+// ===== Voting =====
+function pushVote(w){ voteBuf.push(w); if (voteBuf.length > VOTE_K) voteBuf.shift(); }
+function majorityVote(arr){
+  const m = new Map();
+  for (const v of arr) m.set(v, (m.get(v)||0)+1);
+  let best = '（無資料）', c = 0; m.forEach((n,k)=>{ if (n>c){ best=k; c=n; } });
+  return best;
+}
+
+// ===== Gesture rules =====
+function classifyGesture(pts){
+  const isFingerUp = (tip, pip) => pts[tip].y < pts[pip].y;
+  const thumbUp = () => { const tip=pts[4], base=pts[2]; const dx=tip.x-base.x, dy=tip.y-base.y; return Math.hypot(dx,dy)>0.08 };
+  const fingers = [
+    isFingerUp(8,6),
+    isFingerUp(12,10),
+    isFingerUp(16,14),
+    isFingerUp(20,18)
+  ];
+  const upCount = fingers.filter(Boolean).length;
+  if (upCount === 0) return '你好';
+  if (upCount === 2 && fingers[0] && fingers[1]) return '再見';
+  if (upCount === 4) return '謝謝';
+  if (thumbUp() && upCount===0) return '好的';
+  return '偵測中…';
+}
+</script>
+{% endblock %}

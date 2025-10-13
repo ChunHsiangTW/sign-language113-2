@@ -1,0 +1,94 @@
+<!-- templates/edit_profile.html -->
+{% extends "base.html" %}
+
+{% block title %}編輯個人資料{% endblock %}
+
+{% block content %}
+<div class="edit-profile-container">
+    <h2>📝 編輯個人資料</h2>
+    <form action="{{ url_for('edit_profile') }}" method="POST">
+        <div class="form-group">
+            <label for="name">姓名</label>
+            <input type="text" id="name" name="name" value="{{ user.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">性別</label>
+            <select id="gender" name="gender">
+                <option value="" {% if not user.gender %}selected{% endif %}>未選擇</option>
+                <option value="M" {% if user.gender == 'M' %}selected{% endif %}>男</option>
+                <option value="F" {% if user.gender == 'F' %}selected{% endif %}>女</option>
+                <option value="O" {% if user.gender == 'O' %}selected{% endif %}>其他</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="age">年齡</label>
+            <input type="number" id="age" name="age" min="1" max="120" value="{{ user.age }}">
+        </div>
+
+        <div class="form-group">
+            <label for="password">新密碼</label>
+            <input type="password" id="password" name="password" placeholder="不修改請留空">
+        </div>
+
+        <div class="form-group">
+            <label for="confirm">確認新密碼</label>
+            <input type="password" id="confirm" name="confirm" placeholder="不修改請留空">
+        </div>
+
+        <button type="submit">儲存修改</button>
+    </form>
+</div>
+
+<style>
+.edit-profile-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #fff0f5; /* 溫馨粉色背景 */
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.edit-profile-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #d63384;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.7rem;
+    background-color: #ff77aa;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+button[type="submit"]:hover {
+    background-color: #ff5599;
+}
+</style>
+{% endblock %}
