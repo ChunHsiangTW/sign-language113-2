@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}HandLang - 帳號管理{% endblock %}
+{% block header_title %}帳號管理{% endblock %}
+{% block header_sub %}歡迎加入我們！{% endblock %}
+
+{% block content %}
+<div id="messagePanel">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+            {% if category == 'success' %}
+                <li style="color:green">{{ message }}</li>
+            {% else %}
+                <li style="color:red">{{ message }}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+</div>
+
+<div id="authPanel" class="panel">
+    <h3>登入</h3>
+    <form method="POST" action="{{ url_for('login') }}">
+        <label>Email：<input type="email" name="email" placeholder="example@gmail.com" required></label>
+        <label>密碼：<input type="password" name="password" placeholder="密碼" required></label>
+        <div style="display:flex;gap:8px">
+            <input type="submit" value="登入">
+            <button type="button" id="btnShowRegister">註冊</button>
+        </div>
+    </form>
+</div>
+
+<div id="registerPanel" class="panel" style="display:none">
+    <h3>註冊帳號</h3>
+    <form method="POST" action="{{ url_for('register') }}">
+        <label>電子郵件：<input type="email" name="email" required></label>
+        <label>姓名：<input type="text" name="name" required></label>
+        <label>性別：</label>
+        <label><input type="radio" name="gender" value="男" required>男</label>
+        <label><input type="radio" name="gender" value="女">女</label>
+        <label><input type="radio" name="gender" value="其他">其他</label>
+        <label>年齡：<input type="number" name="age" min="0" required></label>
+        <label>密碼：<input type="password" name="password" required></label>
+        <label>確認密碼：<input type="password" name="confirm" required></label>
+        <div style="display:flex;gap:8px">
+            <input type="submit" value="送出註冊">
+            <button type="button" id="btnCancelRegister">取消</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const authPanel = document.getElementById('authPanel');
+const registerPanel = document.getElementById('registerPanel');
+const btnShowRegister = document.getElementById('btnShowRegister');
+const btnCancelRegister = document.getElementById('btnCancelRegister');
+
+btnShowRegister.onclick = () => {
+    authPanel.style.display = 'none';
+    registerPanel.style.display = 'block';
+};
+btnCancelRegister.onclick = () => {
+    authPanel.style.display = 'block';
+    registerPanel.style.display = 'none';
+};
+</script>
+{% endblock %}

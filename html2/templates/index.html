@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Signnest手語小窩 - 首頁{% endblock %}
+{% block header_title %}Signnest手語小窩{% endblock %}
+{% block header_sub %}推廣台灣手語、協助溝通的教學平台{% endblock %}
+
+{% block content %}
+<section class="hero">
+<div class="left">
+<h2>學習手語，讓溝通更靠近</h2>
+<p class="muted">我們提供字卡教學、即時翻譯、學習紀錄等功能。可將你的教學影片上傳並建立字卡。</p>
+<p><a class="cta" href="{{ url_for('flashcards') }}">開始學習字卡</a></p>
+</div>
+<div class="right">
+<img class="logo" src="{{ url_for('static', filename='thumbs/logo.png') }}" alt="logo">
+</div>
+</section>
+
+<section class="features" aria-label="特色">
+<div class="feature">
+<h3>字卡教學</h3> 
+<p><a class="cta" href="{{ url_for('flashcards') }}">開始學習字卡</a></p>
+<p class="muted">點選字卡即可觀看對應教學影片、查看字幕或示範分解。</p>
+</div>
+
+<div class="feature">
+<h3>即時手語翻譯</h3>
+<p><a class="cta" href="{{ url_for('translate') }}">即時翻譯手語</a></p>
+<p class="muted">前端擷取雙手與臉部節點，支援錄製樣本匯出做模型訓練，亦可使用 tfjs 模型做即時推論。</p>
+</div>
+
+<div class="feature">
+<h3>關於我們</h3>
+<p class="muted">
+我們是 <strong>台北商業大學 資訊管理系</strong> 的學生團隊。<br>
+這個網站是為 <strong>一般想學習手語的使用者</strong> 打造，<br>
+讓大家更容易認識與學會台灣手語。
+</p>
+
+<h3>使用說明</h3>
+<p class="muted">
+🔑 點擊首頁右上角「註冊」填寫資料即可註冊<br>
+🔐 註冊後至登入頁輸入帳號密碼<br>
+🎓 在詞庫點擊圖片觀看教學影片<br>
+🧠 使用即時手語翻譯將鏡頭手語動作轉文字。
+</p>
+</div>
+</section>
+{% endblock %}

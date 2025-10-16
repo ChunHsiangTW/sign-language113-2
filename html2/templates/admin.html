@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>管理後台 - HandLang</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+body {
+    max-width: 900px;
+    margin: 40px auto;
+    font-family: "Microsoft JhengHei", sans-serif;
+}
+h2, h3 {
+    color: #333;
+    margin-top: 40px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid #aaa;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: #f2f2f2;
+}
+img {
+    border-radius: 8px;
+}
+form {
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+label {
+    display: block;
+    margin-top: 10px;
+}
+button {
+    margin-top: 12px;
+    padding: 8px 16px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #45a049;
+}
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.back-link:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+
+<body>
+<h1>🧩 HandLang 管理後台</h1>
+<p>只有管理員帳號（user_id = 1）可以看到此頁面。</p>
+
+<hr>
+
+<h2>👥 使用者列表</h2>
+<table>
+<tr><th>ID</th><th>Email</th><th>姓名</th></tr>
+{% for u in users %}
+<tr><td>{{ u.id }}</td><td>{{ u.email }}</td><td>{{ u.name }}</td></tr>
+{% else %}
+<tr><td colspan="3">目前沒有使用者資料</td></tr>
+{% endfor %}
+</table>
+
+<h2>🗂️ 字卡列表</h2>
+<table>
+<tr><th>ID</th><th>標題</th><th>縮圖</th><th>影片</th><th>描述</th></tr>
+{% for c in cards %}
+<tr>
+    <td>{{ c.id }}</td>
+    <td>{{ c.title }}</td>
+    <td>
+        <img src="{{ url_for('static', filename=c.thumb) }}" width="100" alt="{{ c.title }}">
+    </td>
+    <td>{{ c.video }}</td>
+    <td>{{ c.desc or '' }}</td>
+</tr>
+{% else %}
+<tr><td colspan="5">目前沒有字卡資料</td></tr>
+{% endfor %}
+</table>
+
+<h3>🆕 新增字卡</h3>
+<form method="POST" action="{{ url_for('add_card') }}">
+    <p style="font-size:14px;color:#666;">
+        ⚠️ 注意：請直接輸入檔名（例如：<code>hello.png</code>、<code>hello.mp4</code>），系統會自動加上資料夾路徑。
+    </p>
+    <label>標題：<input type="text" name="title" required></label>
+    <label>縮圖檔名：<input type="text" name="thumb" placeholder="例如: hello.png" required></label>
+    <label>影片檔名：<input type="text" name="video" placeholder="例如: hello.mp4" required></label>
+    <label>描述：<textarea name="desc" rows="3" cols="40" placeholder="可輸入此手語的說明文字"></textarea></label>
+    <button type="submit">送出新增</button>
+</form>
+
+<a class="back-link" href="{{ url_for('index') }}">🏠 回首頁</a>
+</body>
+</html>

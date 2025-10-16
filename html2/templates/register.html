@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}HandLang - 註冊{% endblock %}
+{% block header_title %}註冊帳號{% endblock %}
+{% block header_sub %}歡迎加入我們！{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- 顯示訊息 -->
+    <div id="messagePanel">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                {% if category == 'success' %}
+                    <li style="color:green">{{ message }}</li>
+                {% else %}
+                    <li style="color:red">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- 註冊表單 -->
+    <div class="panel">
+        <form method="POST" action="{{ url_for('register') }}">
+            <label>電子郵件：
+                <input type="email" name="email" required placeholder="example@gmail.com">
+            </label>
+            <label>姓名：
+                <input type="text" name="name" required>
+            </label>
+            <label>性別：</label>
+            <label><input type="radio" name="gender" value="男" required>男</label>
+            <label><input type="radio" name="gender" value="女">女</label>
+            <label><input type="radio" name="gender" value="其他">其他</label>
+            <label>年齡：
+                <input type="number" name="age" min="0" required>
+            </label>
+            <label>密碼：
+                <input type="password" name="password" required>
+            </label>
+            <label>確認密碼：
+                <input type="password" name="confirm" required>
+            </label>
+            <div style="display:flex; gap: 10px; margin-top: 10px;">
+                <button type="submit">送出註冊</button>
+                <a href="{{ url_for('auth') }}" class="cta">回登入頁</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

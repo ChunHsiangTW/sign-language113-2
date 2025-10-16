@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}HandLang - 字卡教學{% endblock %}
+{% block header_title %}字卡教學{% endblock %}
+{% block header_sub %}點選字卡即可觀看對應教學影片{% endblock %}
+
+{% block content %}
+<div id="cards" class="grid"></div>
+
+<div id="modal" class="modal" role="dialog" aria-modal="true">
+<div class="inner">
+<div>
+<span id="modalTitle"></span>
+<button id="closeModal" class="close">關閉 ✕</button>
+</div>
+<video id="videoPlayer" controls playsinline></video>
+<div class="controls">
+<div class="muted" id="videoDesc"></div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const cardsEl = document.getElementById('cards');
+const modal = document.getElementById('modal');
+const videoPlayer = document.getElementById('videoPlayer');
+const modalTitle = document.getElementById('modalTitle');
+const videoDesc = document.getElementById('videoDesc');
+const closeModal = document.getElementById('closeModal');
+
+async function buildCards(){
+    const res = await fetch('/api/get_cards');
+    const cardsData = await res.json();
+    cardsData.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'card';
+        // 這裡的路徑組合方式是正確的
+        const thumbPath = `{{ url_for('static', filename='') }}${c.thumb}`;
+        const videoPath = `{{ url_for('static', filename='') }}${c.video}`;
+        el.innerHTML = `<img src="${thumbPath}" alt="${c.title}"><h4>${c.title}</h4>`;
+        el.addEventListener('click', () => {
+            modalTitle.textContent = c.title;
+            videoPlayer.src = videoPath;
+            videoDesc.textContent = c.desc;
+            modal.style.display='block';
+            videoPlayer.play(); // (優化) 讓影片自動播放
+        });
+        cardsEl.appendChild(el);
+    });
+}
+
+// 關閉影片的邏輯很完整，很棒！
+closeModal.addEventListener('click', ()=>{ modal.style.display='none'; videoPlayer.pause(); });
+window.addEventListener('click', e => { if(e.target===modal){ modal.style.display='none'; videoPlayer.pause(); } });
+
+buildCards();
+</script>
+{% endblock %}

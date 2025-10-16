@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}HandLang{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="wrap">
+<header>
+    <img src="{{ url_for('static', filename='thumbs/logo.png') }}" alt="logo">
+    <div>
+        <h1>{% block header_title %}HandLang{% endblock %}</h1>
+        <div class="muted">{% block header_sub %}{% endblock %}</div>
+    </div>
+    <nav class="ml-auto">
+        {% if session.get('user_name') %}
+            <span class="user-info">👤 歡迎，{{ session.get('user_name') }}</span>
+            <a class="btn" href="{{ url_for('logout') }}">登出</a>
+        {% else %}
+            <a class="btn" href="{{ url_for('login') }}">登入</a>
+            <a class="btn" href="{{ url_for('register') }}">註冊</a>
+        {% endif %}
+        <a class="btn" href="{{ url_for('index') }}">回首頁</a>
+    </nav>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p>國立台北商業大學資管系 - 114411組 ｜ &copy; ntubimd114411</p>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,233 @@
+/* ====== 全站通用變數 ====== */
+:root {
+    --pink: #FFC7D1;
+    --cream: #f8c581;
+    --card: #fff;
+    --accent: #ee8397;
+    --muted: #666;
+    --radius: 12px;
+    --maxw: 1000px;
+}
+
+/* ====== 全域設定 ====== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Noto Sans TC", Arial, sans-serif;
+    margin: 0;
+    padding: 18px;
+    background: linear-gradient(180deg, var(--cream), #fff);
+    color: #333;
+    min-height: 100vh;
+}
+
+/* ====== 容器 ====== */
+.container, .wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: auto;
+}
+
+/* ====== header ====== */
+header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+header img {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius);
+    object-fit: contain;
+}
+header h1, header h2 {
+    margin: 0;
+    color: var(--accent);
+}
+header .muted {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+nav a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 6px 12px;
+    border-radius: var(--radius);
+}
+nav a.btn {
+    background: var(--card);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* ====== 主要內容區塊 ====== */
+.hero {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 6px 18px rgba(255,140,150,0.06);
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+.hero .left { flex: 1; }
+.hero .right { width: 160px; }
+.features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+}
+.feature {
+    background: linear-gradient(180deg, #fff, #FFF7F8);
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,140,150,0.06);
+}
+
+/* ====== 字卡 Grid ====== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 12px;
+    border: 1px solid rgba(0,0,0,0.04);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.12s;
+}
+.card:hover {
+    transform: translateY(-4px);
+}
+.card img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.card h4 { margin: 8px 0 0 0; }
+
+/* ====== modal ====== */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.modal.open { display: flex; }
+.modal .inner {
+    width: 100%;
+    max-width: 700px;
+    background: white;
+    border-radius: var(--radius);
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+.modal video {
+    width: 100%;
+    max-height: 60vh;
+    border-radius: 8px;
+    background: #000;
+}
+.close {
+    float: right;
+    background: #eee;
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+}
+.muted { color: var(--muted); font-size: 0.95rem; }
+
+/* ====== 表單 ====== */
+label { display: block; margin-top: 8px; }
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 6px;
+}
+button {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 0;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    margin-top: 8px;
+}
+button.logout { background: #eee; color: #333; }
+
+/* ====== footer ====== */
+footer {
+    margin-top: 18px;
+    text-align: center;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* CTA 按鈕 */
+a.cta {
+    display: inline-block;
+    padding: 10px 14px;
+    background: var(--accent);
+    color: white;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background 0.2s;
+}
+a.cta:hover {
+    background: #ff7f9b;
+}
+
+/* header 右側的自動 margin */
+.ml-auto {
+    margin-left: auto;
+}
+
+.ml-auto a {
+    text-decoration: none;
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    background: var(--card);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: background 0.2s;
+}
+
+.ml-auto a:hover {
+    background: var(--pink);
+}
+
+/* logo 可以加一點 margin 調整 */
+img.logo {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius);
+    object-fit: contain;
+}
+
+
+/* ====== 響應式 ====== */
+@media (max-width: 640px) {
+    .features { grid-template-columns: 1fr; }
+    .hero { flex-direction: column; align-items: flex-start; }
+    header { flex-direction: row; gap: 10px; }
+}

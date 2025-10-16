@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}HandLang - 手語即時翻譯{% endblock %}
+{% block header_title %}手語即時翻譯{% endblock %}
+{% block header_sub %}使用網頁前端即時辨識手語{% endblock %}
+
+{% block content %}
+<div id="videoContainer"></div>
+<div id="webcamContainer">
+<video id="webcam" autoplay playsinline width="400" height="300"></video>
+<div id="result">辨識結果: </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.2.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559196/face_mesh.min.js" crossorigin="anonymous"></script>
+<script>
+// 保留你原本的手語辨識 JS
+</script>
+{% endblock %}
