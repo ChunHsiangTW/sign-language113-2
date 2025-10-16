@@ -1,0 +1,4 @@
+固定長度 + 傳 lengths（推薦）
+仍然裁切/補齊到 140，但把「實際有效幀數」傳給模型，用 attention mask（或 pack）遮掉尾端補齊的 0。這樣最容易接上你現有流程、提昇準確率。
+
+修改:perpare_data、inference2、sign_lstm
