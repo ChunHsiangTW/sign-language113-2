@@ -1,3 +1,4 @@
+#2前處理
 import os
 import json
 import numpy as np
