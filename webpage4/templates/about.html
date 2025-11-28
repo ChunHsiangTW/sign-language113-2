@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}關於我們{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <h1 class="about-title">關於我們</h1>
+
+    <section class="about-section">
+    <h2>🌟 網站宗旨</h2>
+    <p>我們致力於推廣 <strong>台灣手語（TSL）</strong>，讓更多人認識並學習這項美麗的語言。</p>
+    <p>本網站以 <strong>非聽障人士</strong> 為主要使用對象，提供完整的學習資源與互動功能，幫助使用者從基礎開始學習手語，並在日常生活中靈活應用。</p>
+    <p>同時，我們也提供 <strong>即時翻譯功能</strong>，協助聽障朋友在各種情境中更順利地與他人溝通，促進無障礙的雙向交流。</p>
+    <p>我們相信，語言是連接彼此的橋樑，而手語也能成為一種溫暖而有力量的表達方式。</p>
+</section>
+
+
+   <section class="about-section"> 
+    <h2>👩‍💻 開發團隊簡介</h2>
+    <p>我們是來自 <strong>台北商業大學 資訊管理系</strong> 的學生團隊。</p>
+    <p>這個網站主要是為了 <strong>一般想學習手語的使用者</strong> 所打造，讓大家能更容易認識與學會台灣手語。</p>
+    <p>我們相信，溝通不應只是單向的努力——<strong>為什麼總是要聽障人士來理解我們？</strong><br>
+    是時候讓我們主動學習手語，主動理解他們。</p>
+    <p>同時，我們也希望這個平台能提供 <strong>聽障朋友</strong> 一個便利的即時翻譯工具，協助他們更輕鬆參與生活與交流。</p>
+    <p>這裡不只是工具網站，更是一個 <em>友善、包容、溫馨</em> 的學習空間。</p>
+</section>
+
+
+    <section class="about-section">
+        <h2>📘 使用說明</h2>
+        <ul>
+            <li>🔑 點擊首頁右上角的「註冊」按鈕，填寫基本資料後即可註冊成功。</li>
+            <li>🔐 註冊完成後，請至「登入」頁面輸入帳號密碼登入。</li>
+            <li>🎓 在「詞庫」頁面中，點擊圖片可觀看該手語的教學影片。</li>
+            <li>🧠 可使用「即時手語翻譯」功能，將鏡頭前的手語動作轉換為文字。</li>
+        </ul>
+        <p>我們希望學習手語變得 <strong>簡單、有趣、實用</strong>！</p>
+    </section>
+</div>
+<a href="{{ url_for('index') }}" class="button">回首頁</a>
+
+{% endblock %}

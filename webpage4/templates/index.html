@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}首頁 - Signnest手語小窩{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <!-- 標題 -->
+    <h3 class="main-title">歡迎來到Signnest手語小窩</h3>
+    <p class="main-subtitle">學習手語・幫助溝通・友善社會</p>
+
+    <!-- 輪播圖片 -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" data-video-url="{{ url_for('video', title_en='not_seen') }}">
+                <img src="{{ url_for('static', filename='images/1.png') }}" alt="不見">
+            </div>
+            <div class="swiper-slide" data-video-url="{{ url_for('video', title_en='good') }}">
+                <img src="{{ url_for('static', filename='images/2.png') }}" alt="好">
+            </div>
+            <div class="swiper-slide" data-video-url="{{ url_for('video', title_en='morning') }}">
+                <img src="{{ url_for('static', filename='images/3.png') }}" alt="早">
+            </div>
+        </div>
+
+        <!-- 左右控制箭頭 -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <!-- 功能按鈕 -->
+    <div class="home-buttons">
+        <a href="{{ url_for('learn') }}"><button>開始學習手語</button></a>
+    </div>
+</div>
+
+<!-- Swiper 的 CDN 資源 -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- 初始化 Swiper + 點擊跳轉影片 -->
+<script>
+    const swiper = new Swiper(".mySwiper", {
+        loop: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+
+    // 點擊輪播圖跳轉影片
+    document.querySelectorAll('.swiper-slide').forEach(slide => {
+        slide.addEventListener('click', () => {
+            const url = slide.dataset.videoUrl;
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ lesson.title }}  手語教學</h2>
+
+<!-- 顯示影片中文意思 -->
+{% if lesson.title_cn %}
+<div style="margin-bottom: 12px; font-size: 18px; font-weight: bold; color: #203079;">
+    📖 影片意思：{{ lesson.title_cn }}
+</div>
+{% endif %}
+
+<div class="video-container">  
+    <video controls autoplay loop style="max-width: 100%; border-radius: 12px;">
+        <source src="{{ url_for('static', filename='videos_new/' + lesson.filename) }}" type="video/mp4">
+        <p>抱歉，無法顯示此影片。</p>
+    </video>
+</div>
+
+<!-- 按鈕容器，使用 flex 水平排列並置中 -->
+<div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px;">
+
+    {% if prev_title_en %}
+    <a href="{{ url_for('video', title_en=prev_title_en) }}">
+        <button>上一個</button>
+    </a>
+    {% else %}
+    <button disabled>上一個</button>
+    {% endif %}
+
+    <a href="{{ url_for('learn') }}">
+        <button>返回學習頁面</button>
+    </a>
+
+    {% if next_title_en %}
+    <a href="{{ url_for('video', title_en=next_title_en) }}">
+        <button>下一個</button>
+    </a>
+    {% else %}
+    <button disabled>下一個</button>
+    {% endif %}
+
+</div>
+{% endblock %}

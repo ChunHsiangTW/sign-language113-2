@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>學習手語</h2>
+
+<div class="lesson-layout">
+    <!-- 左側分類清單 + 搜尋框 -->
+    <div class="lesson-sidebar">
+        <ul>
+            <li><a href="{{ url_for('learn', category='all') }}">全部</a></li>
+            <li><a href="{{ url_for('learn', category='terms') }}">資訊管理系生活常見詞</a></li>
+            <li><a href="{{ url_for('learn', category='class') }}">課堂與學習</a></li>
+            <li><a href="{{ url_for('learn', category='campus') }}">校園生活</a></li>
+            <li><a href="{{ url_for('learn', category='software') }}">軟體與工具</a></li>
+        </ul>
+
+        <!-- 搜尋表單 -->
+        <form method="get" action="{{ url_for('learn') }}" class="search-form">
+            <input type="hidden" name="category" value="{{ category or 'all' }}">
+            <input type="text" name="keyword" placeholder="搜尋手語" value="{{ keyword or '' }}">
+            <button type="submit">搜尋</button>
+        </form>
+    </div>
+
+    <!-- 右側課程內容 -->
+    <div class="lesson-content">
+        <div class="lesson-container">
+
+            {% if lessons %}
+                {% for lesson in lessons %}
+                <div class="lesson-item">
+                    {% set video_url = url_for('video', title_en=lesson.title_en) %}
+                    <div class="lesson-image-container"
+                        onclick="window.location.href='{{ video_url }}'">
+                        <!-- 顯示縮圖 -->
+                        <img src="{{ url_for('static', filename='images/' + lesson.image_filename) }}"
+                             alt="{{ lesson.title_cn }}" class="lesson-image">
+
+
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>沒有找到符合條件的手語影片。</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
